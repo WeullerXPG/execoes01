@@ -42,9 +42,19 @@ public class Reservation {
 				//VAI PEGAR A DATA EM MILISSEGUNDOS E CONVERTER EM DIAS
 	}
 	
-	public void updateDates(Date checkin, Date checkout) {
+	public String updateDates(Date checkin, Date checkout) {
+		Date now = new Date();
+		//PEGA A DATA E O HORARIO ATUAL
+		if (checkin.before(now) || checkout.before(now)) {
+		//SE CHECKIN OU CHECKOUT SEREM ANTES(BEFORE) DO NOW = DATA E HORARIO ATUAL
+			return "Error in reservation: Reservation dates for update must be future dates";
+		}
+		if (!checkout.after(checkin)) {
+			return "Error in reservation: Check-out date must be after check-in date";
+		}
 		this.checkin = checkin;
 		this.checkout = checkout;
+		return null;
 	}
 	
 	@Override
